@@ -16,7 +16,7 @@ std::optional<std::uint16_t> generate_checksum(std::istream &in)
 	const size_t CHUNK_SIZE = 64 * 1024 * 1024;
 	std::vector<std::uint8_t> buffer(CHUNK_SIZE);
 
-	std::uint32_t checksum = 0;
+	std::uint32_t checksum = 0;//why 32???
 
 	std::uint8_t leftover_byte = 0;
 	size_t leftover_count = 0;
@@ -81,18 +81,13 @@ std::optional<std::uint16_t> generate_checksum(std::istream &in)
 		return ~checksum;
 }
 
-int main(const int argc, const char *argv[])
-{
-
-	// checking if an argument is already there
-	if (argc < 2)
-	{
-		// TODO: please replace the placeholder in the instructions file :)
+void show_help(){
+	// TODO: please replace the placeholder in the instructions file :)
 		std::ifstream file("instructions.txt");
 		char c;
 		srand(time(0));
 
-		int speed = 70; // millis per char
+		int speed = 125; // millis per char
 
 		int chars = 1 + rand() % 10;
 		int wait = (1 + rand() % speed);
@@ -109,6 +104,15 @@ int main(const int argc, const char *argv[])
 			std::this_thread::sleep_for(std::chrono::milliseconds(wait));
 			chars--;
 		}
+}
+
+int main(const int argc, const char *argv[])
+{
+
+	// checking if an argument is already there
+	if (argc < 2)
+	{
+		show_help();
 		return 1;
 	}
 
