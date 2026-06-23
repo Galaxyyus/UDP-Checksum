@@ -6,6 +6,10 @@
 #include <vector>
 #include <optional>
 #include <bitset>
+#include <fstream>
+#include <thread>
+#include <chrono>
+#include <ctime>
 
 std::optional<std::uint16_t> generate_checksum(std::istream& in) {
 	const size_t CHUNK_SIZE = 64 * 1024 * 1024;
@@ -69,6 +73,23 @@ std::optional<std::uint16_t> generate_checksum(std::istream& in) {
 
 
 int main(const int argc, const char* argv[]) {
+
+	//checking if an argument is already there
+	if (argc < 2){
+		// TODO: please replace the placeholder in the instructions file :)
+		std::ifstream file("instructions.txt");
+		char c;
+		srand(time(0));
+		
+		while (file.get(c))
+		{
+			std::cout<< c;
+			std::this_thread::sleep_for(std::chrono::milliseconds(1+ rand()%50));
+		}
+		return 1;
+	}
+
+
 	const std::string option = argv[1];
 	if (option != "-g" && option != "--generate" && option != "-c" && option != "--check") {
 		std::cout << "Unknown option: " << option << " !\n";
