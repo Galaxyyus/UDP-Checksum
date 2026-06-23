@@ -87,17 +87,19 @@ void show_help(){
 		char c;
 		srand(time(0));
 
-		int speed = 125; // millis per char
+		int speed = 40; // millis per char
+		int variation = 20;
 
-		int chars = 1 + rand() % 10;
-		int wait = (1 + rand() % speed);
+		int chars = 1 + rand() % 7;
+		int wait = (speed  - variation +2*(rand() % variation));
 
+		//this ghostly typing makes sure the user reads the instructions fully
 		while (file.get(c))
 		{
 			if (chars <= 0)
 			{
-				chars = 1 + rand() % 10;
-				wait = (1 + rand() % speed);
+				chars = 1 + rand() % 7;
+				wait = wait = (speed  - variation +2*(rand() % variation));
 			}
 			std::cout << c;
 			std::cout.flush();
