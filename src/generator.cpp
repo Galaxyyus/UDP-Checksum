@@ -1,10 +1,4 @@
-#include <optional>
-#include <cstdint>
-#include <istream>
-#include <vector>
-#include <iostream>
-
-#include <UDP_checksum/utilities.hpp>
+#include <UDP_checksum/generator.hpp>
 
 std::optional<std::uint16_t> generate_checksum(std::istream& in) {
 	const int chunk_size_MB = 64;

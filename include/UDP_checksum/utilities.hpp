@@ -1,1 +1,0 @@
-std::optional<std::uint16_t> generate_checksum(std::istream& in);

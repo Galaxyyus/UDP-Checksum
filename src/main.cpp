@@ -11,11 +11,33 @@
 #include <chrono>
 #include <ctime>
 
-#include <UDP_checksum/utilities.hpp>
+#include <UDP_checksum/generator.hpp>
 
 void show_help() {
 	// TODO: please replace the placeholder in the instructions file :)
-	std::ifstream file("instructions.txt");
+	std::istringstream file(R"(Usage Instructions
+
+		This program generates or checks a UDP checksum.
+
+		Examples:
+	main.exe - g - f input.txt
+		main.exe --generate "hello\nworld"
+		main.exe - c - f input.txt
+		main.exe --check "hello\nworld"
+
+		Options :
+		-g, --generate   Generate and display the checksum
+		- c, --check      Check or verify the checksum
+		- f, --file       Read input from a file
+
+		You can provide either :
+	-a file using - f or --file
+		- or a single inline input string(supports escape characters)
+
+		Notes :
+		-Do not provide both a file and an inline input string at the same time.
+		- If no arguments are provided, this message is shown.)");
+
 	char c;
 	srand(time(0));
 

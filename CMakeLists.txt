@@ -9,7 +9,7 @@ set(CMAKE_CXX_EXTENSIONS OFF)
 # Define the executable and its source files
 add_executable(udp_checksum
     src/main.cpp
-    src/utilities.cpp
+    src/generator.cpp
 )
 
 # Specify include directories for the target
