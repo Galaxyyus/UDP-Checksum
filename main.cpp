@@ -13,7 +13,8 @@
 
 std::optional<std::uint16_t> generate_checksum(std::istream &in)
 {
-	const size_t CHUNK_SIZE = 64 * 1024 * 1024;
+	const int chunk_size_MB = 64;
+	const size_t CHUNK_SIZE = chunk_size_MB * 1024 * 1024;
 	std::vector<std::uint8_t> buffer(CHUNK_SIZE);
 
 	std::uint32_t checksum = 0;//why 32???
@@ -81,6 +82,8 @@ std::optional<std::uint16_t> generate_checksum(std::istream &in)
 		return ~checksum;
 }
 
+
+
 void show_help(){
 	// TODO: please replace the placeholder in the instructions file :)
 		std::ifstream file("instructions.txt");
@@ -126,6 +129,7 @@ int main(const int argc, const char *argv[])
 	}
 
 	const bool is_generate = (option == "-g" || option == "--generate");
+	const bool is_check = (option == "-c" || option == "--check");
 
 	std::string inline_input, input_filename;
 
@@ -208,6 +212,38 @@ int main(const int argc, const char *argv[])
 	if (is_generate)
 	{
 		std::cout << std::bitset<16>(*checksum) << '\n';
+		return 0;
+	}
+	if(is_check)
+	{
+		std::cout << "Please enter the checksum to check against (in binary): ";
+		std::string user_checksum_str;
+		std::cin >> user_checksum_str;
+		if(user_checksum_str.length() != 16)
+		{
+			std::cout << "Error: Invalid checksum format. Please provide a 16-bit binary string.\n";
+			return 1;
+		}else{
+			std::uint16_t user_checksum = 0;
+			for(char c : user_checksum_str)
+			{
+				if(c != '0' && c != '1')
+				{
+					std::cout << "Error: Invalid checksum format. Please provide a 16-bit binary string.\n";
+					return 1;
+				}
+				user_checksum = (user_checksum << 1) | (c - '0');
+			}
+			if(user_checksum == *checksum)
+			{
+				std::cout << "Checksum is valid.\n";
+			}
+			else{
+				std::cout << "Checksum is invalid.\n";
+				std::cout << "Expected: " << std::bitset<16>(*checksum) << ", but got: " << user_checksum_str << '\n';
+			}
+		}
+
 		return 0;
 	}
 }
